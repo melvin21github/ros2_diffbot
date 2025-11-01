@@ -1,0 +1,24 @@
+
+# Build and Output Directories:
+# -----------------------------
+# Ignore the 'build' directory, which typically contains compiled code or build artifacts.
+# The trailing slash ensures it only matches a directory.
+build/
+
+# Ignore the 'install' directory, often used for installation files or final output.
+# The trailing slash ensures it only matches a directory.
+install/
+
+# Ignore the 'log' directory, which contains runtime logs that clutter history.
+# The trailing slash ensures it only matches a directory.
+log/
+
+# Python Specific Ignored Files:
+# -----------------------------
+# Ignore the '__pycache__' directory created by the Python interpreter for bytecode.
+# The double underscores (dunders) denote a special directory.
+__pycache__/
+
+# Ignore all Python compiled bytecode files, regardless of where they are in the project.
+# The asterisk (*) is a wildcard that matches any file name ending with .pyc.
+*.pyc
