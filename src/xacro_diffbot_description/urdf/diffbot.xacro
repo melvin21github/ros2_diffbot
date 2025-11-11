@@ -1,7 +1,27 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="diffbot">
     <!-- VARIABLES -->
+    <xacro:property name="base_w" value="0.4"/>
+    <xacro:property name="base_d" value="0.3"/>
+    <xacro:property name="base_h" value="0.1"/>
+    <xacro:property name="wheel_r" value="0.05"/>
+    <xacro:property name="wheel_t" value="0.02"/>
+
     <!-- MACRO:WHEEL  -->
+    <xacro:macro name="wheel" params="name x y z">
+        <link name="${name}">
+            <visual>
+                <geometry>
+                    <cylinder radius="${wheel_r}" length="${wheel_t}"/>
+                </gemoetry>
+                <origin xyz="${x} ${y} ${z}" rpy="1.5708 0 0"/>
+                <material name="black">
+                    <color rgba="0 0 0 1"/>
+                </material>
+            </visual>
+        </link>
+    </xacro:macro>
+
     <!-- BASE LINK -->
     <!-- WHEELS -->
     <!-- JOINTS -->
