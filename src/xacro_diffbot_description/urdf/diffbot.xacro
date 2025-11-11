@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="diffbot">
+    <!-- VARIABLES -->
+    <!-- MACRO:WHEEL  -->
+    <!-- BASE LINK -->
+    <!-- WHEELS -->
+    <!-- JOINTS -->
+</robot>
