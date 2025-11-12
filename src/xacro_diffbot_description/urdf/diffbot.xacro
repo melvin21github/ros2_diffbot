@@ -1,24 +1,53 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="diffbot">
     <!-- VARIABLES -->
-    <xacro:property name="base_w" value="0.4"/>
-    <xacro:property name="base_d" value="0.3"/>
-    <xacro:property name="base_h" value="0.1"/>
-    <xacro:property name="wheel_r" value="0.05"/>
-    <xacro:property name="wheel_t" value="0.02"/>
+    <xacro:property name="base_w" value="0.4"/><!-- width -->
+    <xacro:property name="base_d" value="0.3"/><!-- depth -->
+    <xacro:property name="base_h" value="0.1"/><!-- height -->
+    <xacro:property name="wheel_r" value="0.05"/><!-- wheel radius -->
+    <xacro:property name="wheel_t" value="0.02"/><!-- wheel thickness -->
+
+    <!-- MATERIAL COLORS -->
+
+    <material name="gray">
+        <color rgba="0.6 0.6 0.6 1"/>
+    </material>
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0.2 0.2 0.8 1"/>
+    </material>
 
     <!-- MACRO:WHEEL  -->
     <xacro:macro name="wheel" params="name x y z">
         <link name="${name}">
+            <!-- Visual (for display)  -->
             <visual>
                 <geometry>
                     <cylinder radius="${wheel_r}" length="${wheel_t}"/>
                 </geometry>
                 <origin xyz="${x} ${y} ${z}" rpy="1.5708 0 0"/>
-                <material name="black">
-                    <color rgba="0 0 0 1"/>
-                </material>
+                <material name="black"/>
             </visual>
+
+            <!-- Collision (for Physics Engine)  -->
+            <collision>
+                <geometry>
+                    <cylinder radius="${wheel_r}" length="${wheel_t}"/>
+                </geometry>
+                <origin xyz="${x} ${y} ${z}" rpy="1.5708 0 0"/>
+            </collision>
+            
+            
+            <!-- Inertia (for Dynamics)  -->
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.5"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
         </link>
     </xacro:macro>
 
@@ -29,10 +58,21 @@
                 <box size="${base_w} ${base_d} ${base_h}"/>
             </geometry>
             <origin xyz="0 0 ${base_h/2}" />
-            <material name="gray">
-                <color rgba="0.6 0.6 0.6 1"/>
-            </material>
+            <material name="blue"/>
         </visual>
+
+        <collision>
+            <geometry>
+                <box size="${base_w} ${base_d} ${base_h}"/>
+            </geometry>
+            <origin xyz="0 0 ${base_h/2}" />
+        </collision>
+
+        <inertial>
+            <origin xyz="0 0 ${base_h/2}" rpy="0 0 0"/>
+            <mass value="5.0"/>
+            <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
     </link>
 
     <!-- WHEELS -->
