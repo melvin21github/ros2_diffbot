@@ -1,30 +1,23 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="https://www.ros.org/wiki/xacro" name="diffbot">
-    <!-- VARIABLES -->
-    <xacro:property name="base_w" value="0.4"/><!-- width -->
-    <xacro:property name="base_d" value="0.3"/><!-- depth -->
-    <xacro:property name="base_h" value="0.1"/><!-- height -->
-    <xacro:property name="wheel_r" value="0.05"/><!-- wheel radius -->
-    <xacro:property name="wheel_t" value="0.02"/><!-- wheel thickness -->
-
-    <!-- MATERIAL COLORS -->
+    <xacro:property name="base_w" value="0.4"/>
+    <xacro:property name="base_d" value="0.3"/>
+    <xacro:property name="base_h" value="0.1"/>
+    <xacro:property name="wheel_r" value="0.05"/>
+    <xacro:property name="wheel_t" value="0.02"/>
 
     <material name="gray">
-        <color rgba="0.6 0.6 0.6 1"/>
+        <color rgba="0.6 0.6 0.6 0.5"/>
     </material>
-
     <material name="black">
-        <color rgba="0 0 0 1"/>
+        <color rgba="0 0 0 0.5"/>
     </material>
-
     <material name="blue">
-        <color rgba="0.2 0.2 0.8 1"/>
+        <color rgba="0.2 0.2 0.8 0.5"/>
     </material>
 
-    <!-- MACRO:WHEEL  -->
     <xacro:macro name="wheel" params="name x y z">
         <link name="${name}">
-            <!-- Visual (for display)  -->
             <visual>
                 <geometry>
                     <cylinder radius="${wheel_r}" length="${wheel_t}"/>
@@ -33,7 +26,6 @@
                 <material name="black"/>
             </visual>
 
-            <!-- Collision (for Physics Engine)  -->
             <collision>
                 <geometry>
                     <cylinder radius="${wheel_r}" length="${wheel_t}"/>
@@ -41,17 +33,14 @@
                 <origin xyz="${x} ${y} ${z}" rpy="1.5708 0 0"/>
             </collision>
             
-            
-            <!-- Inertia (for Dynamics)  -->
             <inertial>
-                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
                 <mass value="0.5"/>
                 <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" ixz="0" iyz="0"/>
             </inertial>
         </link>
     </xacro:macro>
 
-    <!-- BASE LINK -->
     <link name="base_link">
         <visual>
             <geometry>
@@ -60,14 +49,12 @@
             <origin xyz="0 0 ${base_h/2}" />
             <material name="blue"/>
         </visual>
-
         <collision>
             <geometry>
                 <box size="${base_w} ${base_d} ${base_h}"/>
             </geometry>
             <origin xyz="0 0 ${base_h/2}" />
         </collision>
-
         <inertial>
             <origin xyz="0 0 ${base_h/2}" rpy="0 0 0"/>
             <mass value="5.0"/>
@@ -75,21 +62,19 @@
         </inertial>
     </link>
 
-    <!-- WHEELS -->
-    <xacro:wheel name="left_wheel" x="0" y="0.15" z="0.05"/>
-    <xacro:wheel name="right_wheel" x="0" y="-0.15" z="0.05"/>
+    <xacro:wheel name="left_wheel" x="0" y="${wheel_t/2}" z="0"/>
+    <xacro:wheel name="right_wheel" x="0" y="-${wheel_t/2}" z="0"/>
 
-    <!-- JOINTS -->
     <joint name="left_wheel-joint" type="continuous">
         <parent link= "base_link"/>
         <child link= "left_wheel"/>
-        <origin xyz="0 0.15 0.05" />
+        <origin xyz="0 0.15 0.05" rpy="0 0 0" /> 
         <axis xyz="0 1 0"/>
     </joint>
     <joint name="right_wheel_joint" type="continuous">
         <parent link= "base_link"/>
         <child link= "right_wheel"/>
-        <origin xyz="0 -0.15 0.05" />
+        <origin xyz="0 -0.15 0.05" rpy="0 0 0" />
         <axis xyz="0 1 0"/>
     </joint>
 </robot>
